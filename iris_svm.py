@@ -1,7 +1,7 @@
 import numpy as np
 from sklearn import svm
 from sklearn.metrics import accuracy_score, recall_score
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 import matplotlib.pyplot as plt
 
 
@@ -33,3 +33,8 @@ plt.scatter(x_test[:,0], x_test[:,1], c = y_test.reshape((-1)), s=50)
 plt.subplot(122)
 plt.scatter(x_test[:,0], x_test[:,1], c = predict.reshape((-1)), s=50)
 plt.show()
+
+model = svm.SVC(gamma=0.1, C=0.8, decision_function_shape='ovo')
+scores = cross_val_score(model,X,y.ravel(),cv=5)
+print(scores)
+print(np.mean(scores))
